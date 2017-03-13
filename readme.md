@@ -1,21 +1,33 @@
-# Lumen PHP Framework
+[download]: https://github.com/ushahidi/comrades-yodie-proxy/releases
+[install]: https://github.com/ushahidi/comrades-yodie-proxy/docs/install.md
+[docs]: https://github.com/ushahidi/comrades-yodie-proxy/docs
+[issues]: https://github.com/ushahidi/comrades-yodie-proxy/issues
+[ushahidi]: http://ushahidi.com
+[ushahidi platform]: https://github.com/ushahidi/platform
+[yodie]: https://gate.ac.uk/applications/yodie.html
+[platform post]: http://github.ushahidi.org/platform/docs/api/index.html#posts
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Comrades Yodie Proxy
+============
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+[Download][download]
 
-## Official Documentation
+[Installation Guide][install]
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+## What is CYP?
 
-## Security Vulnerabilities
+The Comrades Yodie Proxy is designed as an intermediary web adapter which allows for the automated annotation via [Yodie][yodie] of [Ushahidi Platform][ushahidi platform] Posts.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## How does CYP work?
 
-## License
+This tool receives inbound HTTP POST requests, transforms them into a Yodie formatted request and retrieves an annotation for the given request data. The annotated data is formatted as an [Ushahidi Platform Post][platform post] and sent to a pre-configured Ushahidi Platform API instance.
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Authentication works using a shared secret which must be configured on both the [Ushahidi Platform][ushahidi platform] and the CYP instances. HTTP Requests and Responses are signed with this secret using SHA256.
+
+## Useful Links
+
+- [Download][download]
+- [Installation Guide][install]
+- [Documentation][docs]
+- [Bug tracker][issues]
+- [Ushahidi][ushahidi]
