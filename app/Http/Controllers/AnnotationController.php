@@ -34,9 +34,9 @@ class AnnotationController extends Controller
 
             $client = new GuzzleHttp\Client();
 
-            $yodie_api_url = Setting::find('yodie_api_url');
-            $yodie_api_key = Setting::find('yodie_api_key');
-            $yodie_api_secret = Setting::find('yodie_api_secret');
+            $yodie_api_url = config('yodie.api_url');
+            $yodie_api_key = config('yodie.api.key');
+            $yodie_api_secret = config('yodie.api.secret');
             $request = new Request('POST', $yodie_api_url, $text, ['auth' => [$yodie_api_key, $yodie_api_secret]);
 
             return $this->client->send($request);
@@ -46,7 +46,7 @@ class AnnotationController extends Controller
         }
     }
 
-    public funtion format_annotation_as_post($post_id, $data)
+    public function format_annotation_as_post($post_id, $data)
     {
         $yodie_post_field = Setting::find('yodie_post_field');
         return json_encode(array(

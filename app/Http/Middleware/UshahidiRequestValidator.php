@@ -17,7 +17,7 @@ class UshahidiRequestValidator
      */
     public function handle($request, Closure $next)
     {
-        $requestValidator = new RequestValidator(env('PLATFORM_APP_TOKEN'));
+        $requestValidator = new RequestValidator(config('shared_secret'));
         $isValid = $requestValidator->validate(
             $request->header('X-Platform-Signature'),
             $request->fullUrl(),
