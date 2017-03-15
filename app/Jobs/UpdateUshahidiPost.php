@@ -46,8 +46,8 @@ class UpdateUshahidiPost extends Job
      */
     public function handle()
     {
-        $ushahidi_platform_url = Setting::find('ushahidi_platform_url');
-        $ushahidi_platform_secret = Setting::find('ushahidi_platform_secret');
+        $ushahidi_platform_url = config('ushahidi.platform_api_url');
+        $ushahidi_platform_secret = config('shared_secret');
         $request = new Request('POST', $ushahidi_platform_url, $this->post);
         $response = $this->client->send($request);
     }

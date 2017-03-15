@@ -35,6 +35,7 @@ class Annotate extends Job
     public function __construct($text, $post_id)
     {
         $this->text = $text;
+        $this->post_id = $post_id;
     }
 
     /**
