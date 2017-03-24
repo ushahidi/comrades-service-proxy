@@ -1,9 +1,9 @@
 ---
-ip: "192.168.11.11"
+ip: "192.168.22.4"
 memory: 2048
 cpus: 1
-hostname: aggregate-api
-name: aggregate-api
+hostname: comrades-yodie-proxy
+name: comrades-yodie-proxy
 provider: virtualbox
 
 authorize: ~/.ssh/id_rsa.pub
