@@ -8,8 +8,6 @@ try {
     //
 }
 
-$app->configure('options');
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -24,6 +22,8 @@ $app->configure('options');
 $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
+
+$app->configure('options');
 
 $app->withFacades();
 
