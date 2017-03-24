@@ -50,6 +50,10 @@ class AnnotationController extends Controller
     public function format_annotation_as_post($post_id, $data)
     {
         $yodie_post_field = config('ushahidi.survey_destination_field');
+
+        // Currently return raw JSON
+        $yodie_text = $data;
+
         return json_encode(array(
             'id' => $post_id,
             $yodie_post_field => $yodie_text

@@ -1,6 +1,6 @@
 [download]: https://github.com/ushahidi/comrades-yodie-proxy/releases
-[install]: https://github.com/ushahidi/comrades-yodie-proxy/docs/install.md
-[docs]: https://github.com/ushahidi/comrades-yodie-proxy/docs
+[install]: docs/install.md
+[docs]: docs/
 [issues]: https://github.com/ushahidi/comrades-yodie-proxy/issues
 [ushahidi]: http://ushahidi.com
 [ushahidi platform]: https://github.com/ushahidi/platform
