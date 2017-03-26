@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Jobs;
-use Illuminate\Http\Request;
+
+use App\Security\RequestValidator;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-
-use ComradesYodieProxy\Models\Setting;
 
 class UpdateUshahidiPost extends Job
 {
@@ -21,13 +21,7 @@ class UpdateUshahidiPost extends Job
      *
      * @var request
      */
-    protected $post
-    /**
-     * Guzzle Http client to be used to make outbound Http requests
-     *
-     * @var GuzzleHttp::Client
-     */
-    $client
+    protected $post;
     /**
      * Create a new job instance.
      *
@@ -36,7 +30,6 @@ class UpdateUshahidiPost extends Job
     public function __construct($post)
     {
         $this->post = $post;
-        $this->client = new GuzzleHttp\Client();
     }
 
     /**
@@ -46,9 +39,18 @@ class UpdateUshahidiPost extends Job
      */
     public function handle()
     {
-        $ushahidi_platform_url = config('ushahidi.platform_api_url');
-        $ushahidi_platform_secret = config('shared_secret');
-        $request = new Request('POST', $ushahidi_platform_url, $this->post);
-        $response = $this->client->send($request);
+        $ushahidi_platform_url = config('options.ushahidi.platform_api_url');
+        $requestValidator = new RequestValidator(config('options.shared_secret'));
+
+        $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
+
+        $client = new Client();
+        return $client->request('POST', $ushahidi_platform_url, [
+            'headers' => [
+                 'Accept' => 'application/json',
+                 'X-Platform-Signature' => $signature,
+            ],
+            'json' => $this->post
+        ]);
     }
 }
