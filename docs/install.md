@@ -27,7 +27,8 @@ cp .env.example .env
 
 Edit the .env file and set the appropriate values for the following entries:
 
-```SHARED_SECRET=<your_shared_secret_at_least_20_chars>
+```
+SHARED_SECRET=<your_shared_secret_at_least_20_chars>
 USHAHIDI_PLATFORM_API_URL=<full_url_of_ushahidi_platform_instance>
 USHAHIDI_PLATFORM_SOURCE_SURVEY_FIELD_NAME=<name_of_source_field_on_platform_survey_that_should_be_annotated>
 USHAHIDI_PLATFORM_DESTINATION_SURVEY_FIELD_NAME=<name_of_destination_field_on_platform_survey_where_annotation_should_be_saved>
