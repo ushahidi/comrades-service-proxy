@@ -13,7 +13,6 @@ class AnnotationController extends Controller
     public function annotate(Request $request)
     {
         $post = $request->all();
-        Log::info(print_r($post, true));
         $source_field = config('options.ushahidi.survey_source_field');
 
         //$source_text = $post['values'][$source_field][0];
