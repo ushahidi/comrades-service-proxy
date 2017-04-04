@@ -131,12 +131,14 @@ class Annotate extends Job
             $text = str_replace($replace, $value, $text);
         }
 
-        // Currently return raw JSON
         $yodie_text = $text;
 
+        // Create Ushahidi Post structure
         return array(
             'id' => $post_id,
-            $yodie_post_field => $yodie_text
+            'values' => [
+                $yodie_post_field => [$yodie_text]
+            ]
         );
     }
 }

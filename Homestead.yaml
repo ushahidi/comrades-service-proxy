@@ -13,15 +13,15 @@ keys:
 
 folders:
     - map: "./"
-      to: "/home/vagrant/aggregate-api"
+      to: "/home/vagrant/comrades-yodie-proxy-api"
       type: "nfs"
 
 sites:
-    - map: aggregate-api.dev
-      to: "/home/vagrant/aggregate-api/public"
+    - map: comrades-yodie-proxy-api.dev
+      to: "/home/vagrant/comrades-yodie-proxy-api/public"
 
 databases:
-    - aggregate-api
+    - comrades-yodie-proxy-api
 
 variables:
     - key: APP_ENV

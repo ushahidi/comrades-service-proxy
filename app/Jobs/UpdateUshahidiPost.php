@@ -6,6 +6,7 @@ use App\Security\RequestValidator;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Log;
 
 class UpdateUshahidiPost extends Job
 {
@@ -39,13 +40,19 @@ class UpdateUshahidiPost extends Job
      */
     public function handle()
     {
-        $ushahidi_platform_url = config('options.ushahidi.platform_api_url');
+        $ushahidi_platform_url = config('options.ushahidi.platform_api_url') . $this->post['id'];
         $requestValidator = new RequestValidator(config('options.shared_secret'));
+
+        $this->post['api_key'] = config('options.ushahidi.platform_api_key');
+        $this->post['webhook_uuid'] = config('options.ushahidi.platform_webhook_uuid');
+
+        Log::info(print_r($ushahidi_platform_url, true));
 
         $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
 
+        Log::info(print_r($this->post, true));
         $client = new Client();
-        return $client->request('POST', $ushahidi_platform_url, [
+        return $client->request('PUT', $ushahidi_platform_url, [
             'headers' => [
                  'Accept' => 'application/json',
                  'X-Platform-Signature' => $signature,
