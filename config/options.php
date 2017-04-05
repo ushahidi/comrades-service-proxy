@@ -14,5 +14,13 @@ return [
             'secret' => env('YODIE_API_SECRET'),
         ]
     ],
+    'crees' => [
+        'api' => [
+          'url' => env('CREES_API_URL'),
+          'event_related' => env('CREES_EVENT_RELATED'),
+          'event_type' => env('CREES_EVENT_TYPE'),
+          'info_type' => env('CREES_INFO_TYPE'),
+        ]
+    ],
     'shared_secret' => env('SHARED_SECRET')
 ];

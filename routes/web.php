@@ -16,3 +16,7 @@ $app->get('/', function () use ($app) {
 });
 
 $app->post('/annotate', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'AnnotationController@annotate']);
+
+$app->post('/crees/eventRelated', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'creesController@eventRelated']);
+$app->post('/crees/eventType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'creesController@eventType']);
+$app->post('/crees/infoType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'creesController@infoType']);
