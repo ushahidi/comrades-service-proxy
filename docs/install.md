@@ -41,7 +41,7 @@ YODIE_API_SECRET=<yodie_api_secret>
 And finally, add the following to your `/etc/hosts` file:
 
 ```
-192.168.22.4 comrades-yodie-proxy.dev
+192.168.22.4 comrades-service-proxy.dev
 ```
 
-Go to http://comrades-yodie-proxy.dev/ in your browser to verify that everything worked.
+Go to http://comrades-service-proxy.dev/ in your browser to verify that everything worked.

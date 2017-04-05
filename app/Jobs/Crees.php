@@ -88,6 +88,10 @@ class Crees extends Job
 
         $text = $json['label'];
 
+
+        // Accuracy
+
+        // Tag
         // Create Ushahidi Post structure
         return array(
             'id' => $post_id,

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use ComradesYodieProxy\Seeders\SettingsSeeder;
+use ComradesServiceProxy\Seeders\SettingsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
 
         Model::unguard();
-        $this->call(ComradesYodieProxy\Seeders\SettingsSeeder::class);
+        $this->call(ComradesServiceProxy\Seeders\SettingsSeeder::class);
         Model::reguard();
     }
 }
