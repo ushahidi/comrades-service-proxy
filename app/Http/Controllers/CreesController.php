@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Jobs\Crees;
+use App\Jobs\RunCreesService;
 
 use Log;
 
@@ -13,11 +13,7 @@ class CreesController extends Controller
     public function eventRelated(Request $request)
     {
         $post = $request->all();
-        $source_field = config('options.ushahidi.survey_source_field');
-
-        //$source_text = $post['values'][$source_field][0];
-        $source_text = $post[$source_field];
-        dispatch(new Crees($post['id'], $source_text, 'eventRelated'));
+        dispatch(new RunCreesService($post, 'eventRelated'));
 
         return;
     }
@@ -25,11 +21,7 @@ class CreesController extends Controller
     public function eventType(Request $request)
     {
         $post = $request->all();
-        $source_field = config('options.ushahidi.survey_source_field');
-
-        //$source_text = $post['values'][$source_field][0];
-        $source_text = $post[$source_field];
-        dispatch(new EventType($post['id'], $source_text, 'eventType'));
+        dispatch(new RunCreesService($post, 'eventType'));
 
         return;
     }
@@ -37,12 +29,8 @@ class CreesController extends Controller
     public function infoType(Request $request)
     {
         $post = $request->all();
-        $source_field = config('options.ushahidi.survey_source_field');
-
-        //$source_text = $post['values'][$source_field][0];
-        $source_text = $post[$source_field];
-        dispatch(new InfoType($post['id'], $source_text, 'infoType'));
+        dispatch(new RunCreesService($post, 'infoType'));
 
         return;
-    }    
+    }
 }

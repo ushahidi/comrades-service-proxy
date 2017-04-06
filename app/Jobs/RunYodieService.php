@@ -9,58 +9,10 @@ use GuzzleHttp\Psr7\Request;
 
 use Log;
 
-class Annotate extends Job
+class RunYodieService extends RunProxyService
 {
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 5;
-    /**
-     * The text to be annotated
-     *
-     * @var string
-     */
-    protected $text;
 
-    /**
-     * The post id
-     *
-     * @var int
-     */
-    protected $post_id;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct($post_id, $text)
-    {
-        $this->post_id = $post_id;
-        $this->text = $text;
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        $this->runAnnotation($this->post_id, $this->text);
-    }
-
-    public function runAnnotation($post_id, $text)
-    {
-      $response = $this->requestAnnotation($text);;
-      $post = $this->format_annotation_as_post($post_id, json_decode($response->getBody()));
-
-      dispatch(new UpdateUshahidiPost($post));
-    }
-
-    public function requestAnnotation($text)
+    public function requestProcessing($text)
     {
         try {
             $client = new Client();
@@ -99,7 +51,7 @@ class Annotate extends Job
         );
     }
 
-    public function format_annotation_as_post($post_id, $json)
+    public function format_as_post($post, $json)
     {
         $yodie_post_field = config('options.ushahidi.survey_destination_field');
 
@@ -133,12 +85,10 @@ class Annotate extends Job
 
         $yodie_text = $text;
 
-        // Create Ushahidi Post structure
-        return array(
-            'id' => $post_id,
-            'values' => [
-                $yodie_post_field => [$yodie_text]
-            ]
-        );
+        $destination_field_uuid = $post['destination_field_uuid'];
+
+        $post['values'][$destination_field_uuid] = $yodie_text;
+
+        return $post;
     }
 }

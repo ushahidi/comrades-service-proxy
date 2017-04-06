@@ -44,7 +44,6 @@ class UpdateUshahidiPost extends Job
         $requestValidator = new RequestValidator(config('options.shared_secret'));
 
         $this->post['api_key'] = config('options.ushahidi.platform_api_key');
-        $this->post['webhook_uuid'] = config('options.ushahidi.platform_webhook_uuid');
 
 
         $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
