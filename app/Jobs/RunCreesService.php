@@ -48,21 +48,14 @@ class RunCreesService extends RunProxyService
 
     public function format_as_post($post, $json)
     {
-        $post_field = config('options.ushahidi.survey_destination_field');
-
-
-        $text = $json['label'];
+        $text = $json->label;
+        $post['tags'] = [$text];
 
 
         // Accuracy
 
         // Tag
         // Create Ushahidi Post structure
-        return array(
-            'id' => $post['id'],
-            'tags' => [
-                $text
-            ]
-        );
+        return $post;
     }
 }

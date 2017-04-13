@@ -85,9 +85,9 @@ class RunYodieService extends RunProxyService
 
         $yodie_text = $text;
 
-        $destination_field_uuid = $post['destination_field_uuid'];
+        $destination_field_key = $post['destination_field_key'];
 
-        $post['values'][$destination_field_uuid] = $yodie_text;
+        array_set($post, $destination_field_key, $yodie_text);
 
         return $post;
     }

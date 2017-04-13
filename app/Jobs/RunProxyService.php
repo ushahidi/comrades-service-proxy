@@ -47,9 +47,9 @@ abstract class RunProxyService extends Job
 
     public function runService($post)
     {
-      Log::debug(print_r($post, true));
-      $source_field_uuid = $post['source_field_uuid'];
-      $response = $this->requestProcessing($post['values'][$source_field_uuid]);
+
+      $source_field_key = $post['source_field_key'];
+      $response = $this->requestProcessing(array_get($post, $source_field_key));
 
       $post = $this->format_as_post($post, json_decode($response->getBody()));
 

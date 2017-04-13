@@ -21,7 +21,7 @@ class UshahidiRequestValidator
         $requestValidator = new RequestValidator(config('options.ushahidi.shared_secret'));
 
         $isValid = $requestValidator->validate(
-            $request->header('X-Platform-Signature'),
+            $request->header('X-Ushahidi-Signature'),
             $request->fullUrl(),
             json_encode($request->all())
         );

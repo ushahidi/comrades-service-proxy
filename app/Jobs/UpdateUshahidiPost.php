@@ -5,7 +5,8 @@ namespace App\Jobs;
 use App\Security\RequestValidator;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use Log;
 
 class UpdateUshahidiPost extends Job
@@ -45,16 +46,23 @@ class UpdateUshahidiPost extends Job
 
         $this->post['api_key'] = config('options.ushahidi.platform_api_key');
 
-
         $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
 
         $client = new Client();
-        return $client->request('PUT', $ushahidi_platform_url, [
-            'headers' => [
-                 'Accept' => 'application/json',
-                 'X-Ushahidi-Signature' => $signature,
-            ],
-            'json' => $this->post
-        ]);
+        try {
+            $response = $client->request('PUT', $ushahidi_platform_url, [
+                'headers' => [
+                     'Accept' => 'application/json',
+                     'X-Ushahidi-Signature' => $signature,
+                ],
+                'json' => $this->post
+            ]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getResponse()));
+            }
+        }
+
+        return $response;
     }
 }
