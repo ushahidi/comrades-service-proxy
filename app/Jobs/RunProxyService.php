@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Request;
 
 use Log;
 
-class RunProxyService extends Job
+abstract class RunProxyService extends Job
 {
     /**
      * The number of times the job may be attempted.
@@ -42,11 +42,12 @@ class RunProxyService extends Job
      */
     public function handle()
     {
-        $this->runService($this->post_id);
+        $this->runService($this->post);
     }
 
     public function runService($post)
     {
+      Log::debug(print_r($post, true));
       $source_field_uuid = $post['source_field_uuid'];
       $response = $this->requestProcessing($post['values'][$source_field_uuid]);
 

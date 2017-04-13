@@ -41,7 +41,7 @@ class UpdateUshahidiPost extends Job
     public function handle()
     {
         $ushahidi_platform_url = config('options.ushahidi.platform_api_url') . $this->post['id'];
-        $requestValidator = new RequestValidator(config('options.shared_secret'));
+        $requestValidator = new RequestValidator(config('options.ushahidi.shared_secret'));
 
         $this->post['api_key'] = config('options.ushahidi.platform_api_key');
 
@@ -52,7 +52,7 @@ class UpdateUshahidiPost extends Job
         return $client->request('PUT', $ushahidi_platform_url, [
             'headers' => [
                  'Accept' => 'application/json',
-                 'X-Platform-Signature' => $signature,
+                 'X-Ushahidi-Signature' => $signature,
             ],
             'json' => $this->post
         ]);

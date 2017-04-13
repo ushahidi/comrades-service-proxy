@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Request;
 
 use Log;
 
-class RunCreesService extends ProxyService
+class RunCreesService extends RunProxyService
 {
     /**
       * Crees Service Type
@@ -41,7 +41,7 @@ class RunCreesService extends ProxyService
                 ]
         		);
 
-        } catch (YodieRequestFail $e) {
+        } catch (CreesRequestFail $e) {
 
         }
     }
@@ -59,9 +59,9 @@ class RunCreesService extends ProxyService
         // Tag
         // Create Ushahidi Post structure
         return array(
-            'id' => $post_id,
+            'id' => $post['id'],
             'tags' => [
-                ''
+                $text
             ]
         );
     }

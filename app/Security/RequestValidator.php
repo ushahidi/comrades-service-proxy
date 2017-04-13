@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use Log;
+
 class RequestValidator {
     protected $authToken;
 

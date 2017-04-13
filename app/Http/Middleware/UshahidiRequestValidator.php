@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Response;
 use App\Security\RequestValidator;
 
+use Log;
 class UshahidiRequestValidator
 {
     /**
@@ -17,7 +18,8 @@ class UshahidiRequestValidator
      */
     public function handle($request, Closure $next)
     {
-        $requestValidator = new RequestValidator(config('options.shared_secret'));
+        $requestValidator = new RequestValidator(config('options.ushahidi.shared_secret'));
+
         $isValid = $requestValidator->validate(
             $request->header('X-Platform-Signature'),
             $request->fullUrl(),
