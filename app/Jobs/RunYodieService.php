@@ -87,8 +87,14 @@ class RunYodieService extends RunProxyService
 
         $destination_field_key = $post['destination_field_key'];
 
-        array_set($post, $destination_field_key, $yodie_text);
+        $data = [
+            'id' => $post['id'],
+            'webhook_uuid' => $post['webhook_uuid'],
+            'values' =>[]
+        ];
 
-        return $post;
+        array_set($data, $destination_field_key, [$yodie_text]);
+
+        return $data;
     }
 }

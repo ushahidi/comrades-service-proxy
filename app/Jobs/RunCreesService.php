@@ -56,6 +56,14 @@ class RunCreesService extends RunProxyService
 
         // Tag
         // Create Ushahidi Post structure
-        return $post;
+
+        // At the moment it is important to only set fields that you intend to change
+        // as Post updates are async it is possible to overwrite other user's data
+        // by performing a full update with the complete object recevied
+        return [
+            'id' => $post['id'],
+            'tags' => $post['tags'],
+            'webhook_uuid' => $post['webhook_uuid']
+        ];
     }
 }
