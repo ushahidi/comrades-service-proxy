@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Response;
-use ComradesYodieProxy\Security\RequestValidator;
+use App\Security\RequestValidator;
 
+use Log;
 class UshahidiRequestValidator
 {
     /**
@@ -17,12 +18,14 @@ class UshahidiRequestValidator
      */
     public function handle($request, Closure $next)
     {
-        $requestValidator = new RequestValidator(config('shared_secret'));
+        $requestValidator = new RequestValidator(config('options.ushahidi.shared_secret'));
+
         $isValid = $requestValidator->validate(
-            $request->header('X-Platform-Signature'),
+            $request->header('X-Ushahidi-Signature'),
             $request->fullUrl(),
-            $request->toArray()
+            json_encode($request->all())
         );
+
 
         if (!$isValid) {
             return new Response('Unauthorized.', 401);

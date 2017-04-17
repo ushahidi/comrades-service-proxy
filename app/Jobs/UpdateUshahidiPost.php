@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Jobs;
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 
-use ComradesYodieProxy\Models\Setting;
+use App\Security\RequestValidator;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
+use Log;
 
 class UpdateUshahidiPost extends Job
 {
@@ -21,13 +23,7 @@ class UpdateUshahidiPost extends Job
      *
      * @var request
      */
-    protected $post
-    /**
-     * Guzzle Http client to be used to make outbound Http requests
-     *
-     * @var GuzzleHttp::Client
-     */
-    $client
+    protected $post;
     /**
      * Create a new job instance.
      *
@@ -36,7 +32,6 @@ class UpdateUshahidiPost extends Job
     public function __construct($post)
     {
         $this->post = $post;
-        $this->client = new GuzzleHttp\Client();
     }
 
     /**
@@ -46,9 +41,29 @@ class UpdateUshahidiPost extends Job
      */
     public function handle()
     {
-        $ushahidi_platform_url = config('ushahidi.platform_api_url');
-        $ushahidi_platform_secret = config('shared_secret');
-        $request = new Request('POST', $ushahidi_platform_url, $this->post);
-        $response = $this->client->send($request);
+        $ushahidi_platform_url = config('options.ushahidi.platform_api_url') . $this->post['id'];
+        $requestValidator = new RequestValidator(config('options.ushahidi.shared_secret'));
+
+        $this->post['api_key'] = config('options.ushahidi.platform_api_key');
+
+        $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
+
+        $client = new Client();
+        $response;
+        try {
+            $response = $client->request('PUT', $ushahidi_platform_url, [
+                'headers' => [
+                     'Accept' => 'application/json',
+                     'X-Ushahidi-Signature' => $signature,
+                ],
+                'json' => $this->post
+            ]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getResponse()));
+            }
+        }
+
+        return $response;
     }
 }

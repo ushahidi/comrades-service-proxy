@@ -8,8 +8,6 @@ try {
     //
 }
 
-$app->configure('options');
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -26,6 +24,8 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+
+$app->configure('options');
 
 $app->withEloquent();
 

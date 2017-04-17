@@ -15,4 +15,9 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-$app->post('/annotate', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'AnnotationController@annotate']);
+$app->post('/yodie/annotate', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'YodieController@annotate']);
+
+$app->post('/crees/all', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@all']);
+$app->post('/crees/eventRelated', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@eventRelated']);
+$app->post('/crees/eventType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@eventType']);
+$app->post('/crees/infoType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@infoType']);
