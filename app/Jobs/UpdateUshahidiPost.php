@@ -49,7 +49,6 @@ class UpdateUshahidiPost extends Job
         $signature = $requestValidator->sign($ushahidi_platform_url, json_encode($this->post));
 
         $client = new Client();
-        $response;
         try {
             $response = $client->request('PUT', $ushahidi_platform_url, [
                 'headers' => [
@@ -63,7 +62,5 @@ class UpdateUshahidiPost extends Job
                 Log::error(Psr7\str($e->getResponse()));
             }
         }
-
-        return $response;
     }
 }
