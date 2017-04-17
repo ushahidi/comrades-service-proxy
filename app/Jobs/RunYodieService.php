@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Jobs\UpdateUshahidiPost;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7;
 
 use Log;
 
@@ -33,8 +33,10 @@ class RunYodieService extends RunProxyService
           			'body' => $text
         		]);
 
-        } catch (YodieRequestFail $e) {
-
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getResponse()));
+            }
         }
     }
 

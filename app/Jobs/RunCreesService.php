@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Jobs\UpdateUshahidiPost;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7;
 
 use Log;
 
@@ -41,8 +41,10 @@ class RunCreesService extends RunProxyService
                 ]
         		);
 
-        } catch (CreesRequestFail $e) {
-
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getResponse()));
+            }
         }
     }
 
