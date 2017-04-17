@@ -49,7 +49,7 @@ class RunCreesService extends RunProxyService
     public function format_as_post($post, $json)
     {
         $text = $json->label;
-        $post['tags'] = [$text];
+        $post['tags'] = $post['tags'].length ? $post['tags'].concat([$text]) : [$text];
 
 
         // Accuracy
