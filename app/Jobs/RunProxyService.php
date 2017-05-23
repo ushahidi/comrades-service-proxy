@@ -25,6 +25,7 @@ abstract class RunProxyService extends Job
      */
     protected $post;
 
+
     /**
      * Create a new job instance.
      *
