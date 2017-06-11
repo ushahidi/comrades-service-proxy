@@ -32,14 +32,31 @@ class RunCreesService extends RunProxyService
     {
         try {
             $client = new Client();
+            $crees_uris = [];
+            $crees_reponses = [];
 
-            $crees_api_url = config('options.crees.api.url') . $this->request_type;
+            if ($this->request_type === 'all') {
+                array_push($crees_uris,
+                    config('options.crees.api.url') . 'eventRelated',
+                    config('options.crees.api.url') . 'eventType',
+                    config('options.crees.api.url') . 'infoType'
+                );
+            } else {
+                array_push($crees_uris,
+                    config('options.crees.api.url') . $this->request_type
+                );
+            }
 
-            return $client->request('GET', $crees_api_url,
-                [
-                  'query' => ['text' => $text]
-                ]
-        		);
+            foreach ($crees_uris as $uri) {
+                $response = $client->request('GET', $uri,
+                    [
+                      'query' => ['text' => $text]
+                    ]
+                );
+                array_push($crees_reponses, $response);
+            }
+
+            return $crees_reponses;
 
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -48,23 +65,22 @@ class RunCreesService extends RunProxyService
         }
     }
 
-    public function format_as_post($post, $json)
+    public function format_as_post($post, $responses)
     {
-        $text = $json->label;
-        $post['tags'] = $post['tags'] ? $post['tags'].concat([$text]) : [$text];
-
-
-        // Accuracy
-
-        // Tag
-        // Create Ushahidi Post structure
+        $tags = [];
+        foreach ($responses as $response) {
+            $json = json_decode($response->getBody());
+            $text = $json->label;
+            $tags = $tags ? array_merge($tags, [$text]) : [$text];
+        }
 
         // At the moment it is important to only set fields that you intend to change
         // as Post updates are async it is possible to overwrite other user's data
         // by performing a full update with the complete object recevied
+        Log::error(print_r($post, true));
         return [
             'id' => $post['id'],
-            'tags' => $post['tags'],
+            'tags' => $tags,
             'webhook_uuid' => $post['webhook_uuid']
         ];
     }

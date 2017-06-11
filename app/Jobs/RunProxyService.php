@@ -52,7 +52,7 @@ abstract class RunProxyService extends Job
       $source_field_key = $post['source_field_key'];
       $response = $this->requestProcessing(array_get($post, $source_field_key));
 
-      $post = $this->format_as_post($post, json_decode($response->getBody()));
+      $post = $this->format_as_post($post, $response);
 
       dispatch(new UpdateUshahidiPost($post));
     }
