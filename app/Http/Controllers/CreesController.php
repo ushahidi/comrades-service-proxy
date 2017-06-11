@@ -10,6 +10,14 @@ use Log;
 class CreesController extends Controller
 {
 
+    public function all(Request $request)
+    {
+        $post = $request->all();
+        dispatch(new RunCreesService($post, 'all'));
+
+        return;
+    }
+
     public function eventRelated(Request $request)
     {
         $post = $request->all();

@@ -7,10 +7,36 @@ use App\Jobs\UpdateUshahidiPost;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 
+use GrahamCampbell\Throttle\Facades\Throttle;
+
 use Log;
 
 class RunYodieService extends RunProxyService
 {
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $remaining = config('options.yodie.request_per_time_block');
+        $time = config('options.yodie.quota_reset');
+
+        $minutes = $time / 60;
+
+        $throttler = Throttle::get([
+                'ip'    => 'ushahidi',
+                'route' => 'yodie',
+            ], $remaining, $minutes);
+
+        if (!$throttler->check()) {
+            $this->release($time);
+            return;
+        }
+
+        $this->runService($this->post);
+    }
 
     public function requestProcessing($text)
     {
@@ -21,7 +47,7 @@ class RunYodieService extends RunProxyService
             $yodie_api_key = config('options.yodie.api.key');
             $yodie_api_secret = config('options.yodie.api.secret');
 
-            return $client->request('POST', $yodie_api_url, [
+            $response = $client->request('POST', $yodie_api_url, [
           			'headers' => [
           			     'Accept' => 'application/json',
                      'Content-type' => 'text/plain'
@@ -32,6 +58,8 @@ class RunYodieService extends RunProxyService
                 ],
           			'body' => $text
         		]);
+
+            return $response;
 
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -53,14 +81,16 @@ class RunYodieService extends RunProxyService
         );
     }
 
-    public function format_as_post($post, $json)
+    public function format_as_post($post, $response)
     {
+        $json = json_decode($response->getBody());
         $yodie_post_field = config('options.ushahidi.survey_destination_field');
 
 
         $text = $json->text;
 
         $replacement_strings = [];
+
         foreach ($json->entities as $entity)
         {
             foreach ($entity as $mention)

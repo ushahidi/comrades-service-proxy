@@ -10,7 +10,9 @@ return [
             'url' => env('YODIE_API_URL'),
             'key' => env('YODIE_API_KEY'),
             'secret' => env('YODIE_API_SECRET'),
-        ]
+        ],
+        'request_per_time_block' => env('YODIE_QUOTA') / env('YODIE_REQUEST_COST'),
+        'quota_reset' => env('YODIE_QUOTA_RESET')
     ],
     'crees' => [
         'api' => [
