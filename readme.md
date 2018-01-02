@@ -18,7 +18,7 @@ Comrades Service Proxy
 
 The Comrades Service Proxy is designed as an intermediary web adapter which allows for the automated annotation via [Yodie][yodie] of [Ushahidi Platform][ushahidi platform] Posts and automated categorisation of Posts via the Open University Crees tool.
 
-## How does CYP work?
+## How does CSP work?
 
 This tool receives inbound HTTP POST requests, transforms them into a Yodie/Crees formatted request and retrieves an annotation/label for the given request data. The annotated/labeled data is formatted as an [Ushahidi Platform Post][platform post] and sent to a pre-configured Ushahidi Platform API instance.
 
