@@ -50,7 +50,7 @@ class RunCreesService extends RunProxyService
             foreach ($crees_uris as $uri) {
                 $response = $client->request('GET', $uri,
                     [
-                      'query' => ['text' => $text]
+                      'query' => ['text' => $text[0]]
                     ]
                 );
                 array_push($crees_reponses, $response);

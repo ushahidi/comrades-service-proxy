@@ -48,15 +48,15 @@ class RunYodieService extends RunProxyService
             $yodie_api_secret = config('options.yodie.api.secret');
 
             $response = $client->request('POST', $yodie_api_url, [
-          			'headers' => [
-          			     'Accept' => 'application/json',
-                     'Content-type' => 'text/plain'
-          			],
+                'headers' => [
+                        'Accept' => 'application/json',
+                    'Content-type' => 'text/plain'
+                ],
                 'auth' => [
                       $yodie_api_key,
                       $yodie_api_secret
                 ],
-          			'body' => $text
+                'body' => json_encode([$text])
         		]);
 
             return $response;
