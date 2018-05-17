@@ -27,12 +27,6 @@ $app->withFacades();
 
 $app->configure('options');
 
-$app->configureMonologUsing(function(Monolog\Logger $monolog) use ($app) {
-    return $monolog->pushHandler(
-        new \Monolog\Handler\RotatingFileHandler($app->storagePath().'/logs/lumen.log', 5)
-    );
-});
-
 $app->withEloquent();
 
 /*
