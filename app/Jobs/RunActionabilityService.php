@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
-
+use GrahamCampbell\Throttle\Facades\Throttle;
 use Log;
 
 class RunActionabilityService extends RunProxyService
@@ -22,6 +22,20 @@ class RunActionabilityService extends RunProxyService
      */
     public function handle()
     {
+        $remaining = config('options.actionability.request_per_time_block');
+        $time = config('options.actionability.quota_reset');
+
+        $minutes = $time / 60;
+
+        $throttler = Throttle::get([
+            'ip'    => 'ushahidi',
+            'route' => 'actionability',
+        ], $remaining, $minutes);
+
+        if (!$throttler->check()) {
+            $this->release($time);
+            return;
+        }
         $this->runService($this->post);
     }
 
@@ -37,8 +51,8 @@ class RunActionabilityService extends RunProxyService
                         'Content-type' => 'text/plain',
                     ],
                     'auth' => [
-                        'ushahidi',
-                        'Xh!07_1grAv6eo]Sekx1'
+                        config('options.actionability.api.username'),
+                        config('options.actionability.api.password')
                     ],
                     'body' => json_encode([$text])
                 ]
