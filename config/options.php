@@ -21,5 +21,14 @@ return [
           'event_type' => env('CREES_EVENT_TYPE'),
           'info_type' => env('CREES_INFO_TYPE'),
         ]
+    ],
+    'actionability' => [
+        'api' => [
+            'url' => env('ACTIONABILITY_API_URL'),
+            'username' => env('ACTIONABILITY_API_USERNAME'),
+            'password' => env('ACTIONABILITY_API_PASSWORD')
+        ],
+        'request_per_time_block' => env('ACTIONABILITY_QUOTA') / env('ACTIONABILITY_REQUEST_COST'),
+        'quota_reset' => env('ACTIONABILITY_QUOTA_RESET')
     ]
 ];

@@ -21,3 +21,5 @@ $app->post('/crees/all', ['middleware' => 'UshahidiRequestValidator', 'uses' => 
 $app->post('/crees/eventRelated', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@eventRelated']);
 $app->post('/crees/eventType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@eventType']);
 $app->post('/crees/infoType', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'CreesController@infoType']);
+
+$app->post('/actionability/annotate', ['middleware' => 'UshahidiRequestValidator', 'uses' => 'ActionabilityController@annotate']);
