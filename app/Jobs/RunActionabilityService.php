@@ -71,9 +71,9 @@ class RunActionabilityService extends RunProxyService
         $json = json_decode($response->getBody(), true);
 
         if ($json['informative'] == false) {
-            $tags = array_merge($tags, ['not informative']);
+            $tags = array_merge($tags, ['Not informative']);
         } else {
-            $tags = array_merge($tags, ['informative']);
+            $tags = array_merge($tags, ['Informative']);
             foreach ($json['action_categories'] as $category) {
                 array_push($tags, $category['desc']);
             }
