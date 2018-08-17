@@ -33,10 +33,9 @@ class RunCreesService extends RunProxyService
         try {
 
             if (!isset($text[0])){
-                Log::error('Source field cannot be empty');
                 throw new \Exception('Source field cannot be empty');
             }
-            
+
             $client = new Client();
             $crees_uris = [];
             $crees_reponses = [];
@@ -66,9 +65,7 @@ class RunCreesService extends RunProxyService
 
         }
         catch (\Exception $e) {
-            if ($e->hasResponse()) {
-                Log::error(Psr7\str($e->getMessage()));
-            }
+            Log::error(Psr7\str($e->getMessage()));
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
