@@ -30,6 +30,9 @@ class RunCreesService extends RunProxyService
 
     public function requestProcessing($text)
     {
+        if (!isset($text[0])){
+            throw new \Exception('Source field cannot be empty');
+        }
         try {
             $client = new Client();
             $crees_uris = [];
@@ -58,7 +61,13 @@ class RunCreesService extends RunProxyService
 
             return $crees_reponses;
 
-        } catch (RequestException $e) {
+        }
+        catch (Exception $e) {
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getMessage()));
+            }
+        }
+        catch (RequestException $e) {
             if ($e->hasResponse()) {
                 Log::error(Psr7\str($e->getResponse()));
             }
