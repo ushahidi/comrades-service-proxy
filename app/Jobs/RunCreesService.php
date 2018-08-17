@@ -65,7 +65,7 @@ class RunCreesService extends RunProxyService
 
         }
         catch (\Exception $e) {
-            Log::error(Psr7\str($e->getMessage()));
+            Log::error($e->getMessage());
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
