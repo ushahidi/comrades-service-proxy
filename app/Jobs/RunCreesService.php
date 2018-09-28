@@ -80,7 +80,7 @@ class RunCreesService extends RunProxyService
         foreach ($responses as $response) {
             $json = json_decode($response->getBody());
             $text = $json->label;
-            $tags = $tags ? array_merge($tags, [$text]) : [$text];
+            array_push($tags, ['value' => $text]);
         }
 
         // At the moment it is important to only set fields that you intend to change

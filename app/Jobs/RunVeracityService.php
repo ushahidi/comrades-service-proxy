@@ -67,7 +67,6 @@ class RunVeracityService extends RunProxyService
 
     public function format_as_post($post, $response)
     {
-        $tags = [];
         $json = json_decode($response->getBody(), true);
         switch($json['rumour_label']) {
             case 'unverified':
@@ -80,7 +79,9 @@ class RunVeracityService extends RunProxyService
                 $label = 'Rumor';
                 break;
         }
-        $tags = array_merge($tags, ['value' => $label, 'confidence_score' => $json['confidence'] * 100]);
+        $tags = [
+            ['value' => $label, 'confidence_score' => $json['confidence'] * 100]
+        ];
         // At the moment it is important to only set fields that you intend to change
         // as Post updates are async it is possible to overwrite other user's data
         // by performing a full update with the complete object recevied

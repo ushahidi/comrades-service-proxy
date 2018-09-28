@@ -71,11 +71,11 @@ class RunActionabilityService extends RunProxyService
         $json = json_decode($response->getBody(), true);
 
         if ($json['informative'] == false) {
-            $tags = array_merge($tags, ['Not informative']);
+            array_push($tags, ['value' => 'Not informative']);
         } else {
-            $tags = array_merge($tags, ['Informative']);
+            array_push($tags, ['value' => 'Informative']);
             foreach ($json['action_categories'] as $category) {
-                array_push($tags, $category['desc']);
+                array_push($tags, ['value' => $category['desc']]);
             }
         }
         // At the moment it is important to only set fields that you intend to change
