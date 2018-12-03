@@ -73,10 +73,10 @@ class RunVeracityService extends RunProxyService
                 $label = 'Unverified';
                 break;
             case false:
-                $label ='Not a rumor';
+                $label = 'Rumor';
                 break;
             default:
-                $label = 'Rumor';
+                $label ='Not a rumor';
                 break;
         }
         $tags = [
