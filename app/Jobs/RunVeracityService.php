@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7;
 use GrahamCampbell\Throttle\Facades\Throttle;
 use Log;
 
-class RunActionabilityService extends RunProxyService
+class RunVeracityService extends RunProxyService
 {
     /**
      *  Service Type
@@ -22,14 +22,14 @@ class RunActionabilityService extends RunProxyService
      */
     public function handle()
     {
-        $remaining = config('options.actionability.request_per_time_block');
-        $time = config('options.actionability.quota_reset');
+        $remaining = config('options.veracity.request_per_time_block');
+        $time = config('options.veracity.quota_reset');
 
         $minutes = $time / 60;
 
         $throttler = Throttle::get([
             'ip'    => 'ushahidi',
-            'route' => 'actionability',
+            'route' => 'veracity',
         ], $remaining, $minutes);
 
         if (!$throttler->check()) {
@@ -43,7 +43,7 @@ class RunActionabilityService extends RunProxyService
     {
         try {
             $client = new Client();
-            $url = config('options.actionability.api.url');
+            $url = config('options.veracity.api.url');
             $response = $client->request('POST', $url,
                 [
                     'headers' => [
@@ -51,8 +51,8 @@ class RunActionabilityService extends RunProxyService
                         'Content-type' => 'text/plain',
                     ],
                     'auth' => [
-                        config('options.actionability.api.username'),
-                        config('options.actionability.api.password')
+                        config('options.veracity.api.username'),
+                        config('options.veracity.api.password')
                     ],
                     'body' => json_encode([$text])
                 ]
@@ -67,17 +67,17 @@ class RunActionabilityService extends RunProxyService
 
     public function format_as_post($post, $response)
     {
-        $tags = [];
         $json = json_decode($response->getBody(), true);
-
-        if ($json['informative'] == false) {
-            array_push($tags, ['value' => 'Not informative']);
+        if ($json['rumour_label'] == 'unverified') {
+            $label = 'Unverified';
+        } else if ($json['rumour_label'] == false) {
+            $label = 'Rumor';
         } else {
-            array_push($tags, ['value' => 'Informative']);
-            foreach ($json['action_categories'] as $category) {
-                array_push($tags, ['value' => $category['desc']]);
-            }
+            $label ='Not a rumor';
         }
+        $tags = [
+            ['value' => $label, 'confidence_score' => $json['confidence'] * 100]
+        ];
         // At the moment it is important to only set fields that you intend to change
         // as Post updates are async it is possible to overwrite other user's data
         // by performing a full update with the complete object recevied

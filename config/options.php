@@ -30,5 +30,14 @@ return [
         ],
         'request_per_time_block' => env('ACTIONABILITY_QUOTA') / env('ACTIONABILITY_REQUEST_COST'),
         'quota_reset' => env('ACTIONABILITY_QUOTA_RESET')
+    ],
+    'veracity' => [
+        'api' => [
+            'url' => env('VERACITY_API_URL'),
+            'username' => env('VERACITY_API_USERNAME'),
+            'password' => env('VERACITY_API_PASSWORD')
+        ],
+        'request_per_time_block' => env('VERACITY_QUOTA') / env('VERACITY_REQUEST_COST'),
+        'quota_reset' => env('VERACITY_QUOTA_RESET')
     ]
 ];

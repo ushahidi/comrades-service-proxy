@@ -81,7 +81,7 @@ class RunYodieService extends RunProxyService
         );
     }
 
-    public function format_as_post($post, $response)
+    public function format_as_post($post, $response, $source_field=null)
     {
         $json = json_decode($response->getBody());
         $yodie_post_field = config('options.ushahidi.survey_destination_field');
@@ -112,10 +112,10 @@ class RunYodieService extends RunProxyService
 
         foreach($replacement_strings as $replace => $value)
         {
-            $text = str_replace($replace, $value, $text);
+            $source_field = str_replace($replace, $value, $source_field);
         }
 
-        $yodie_text = $text;
+        $yodie_text = $source_field;
 
         $destination_field_key = $post['destination_field_key'];
 
