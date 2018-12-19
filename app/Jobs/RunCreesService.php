@@ -74,7 +74,7 @@ class RunCreesService extends RunProxyService
         }
     }
 
-    public function format_as_post($post, $responses)
+    public function format_as_post($post, $responses, $source_field)
     {
         $tags = [];
         foreach ($responses as $response) {

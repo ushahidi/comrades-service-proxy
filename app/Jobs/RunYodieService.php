@@ -86,7 +86,6 @@ class RunYodieService extends RunProxyService
         $json = json_decode($response->getBody());
         $yodie_post_field = config('options.ushahidi.survey_destination_field');
 
-
         $text = $json->text;
 
         $replacement_strings = [];

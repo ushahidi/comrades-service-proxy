@@ -59,5 +59,5 @@ abstract class RunProxyService extends Job
 
     abstract protected function requestProcessing($text);
 
-    abstract protected function format_as_post($post, $json);
+    abstract protected function format_as_post($post, $json, $source_field);
 }
