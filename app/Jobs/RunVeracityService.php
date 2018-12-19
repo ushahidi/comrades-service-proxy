@@ -68,16 +68,12 @@ class RunVeracityService extends RunProxyService
     public function format_as_post($post, $response)
     {
         $json = json_decode($response->getBody(), true);
-        switch($json['rumour_label']) {
-            case 'unverified':
-                $label = 'Unverified';
-                break;
-            case false:
-                $label = 'Rumor';
-                break;
-            default:
-                $label ='Not a rumor';
-                break;
+        if ($json['rumour_label'] == 'unverified') {
+            $label = 'Unverified';
+        } else if ($json['rumour_label'] == false) {
+            $label = 'Rumor';
+        } else {
+            $label ='Not a rumor';
         }
         $tags = [
             ['value' => $label, 'confidence_score' => $json['confidence'] * 100]
