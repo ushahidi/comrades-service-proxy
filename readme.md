@@ -20,7 +20,7 @@ The Comrades Service Proxy is designed as an intermediary web adapter which allo
 
 ## How does CSP work?
 
-This tool receives inbound HTTP POST requests, transforms them into a Yodie/Crees formatted request and retrieves an annotation/label for the given request data. The annotated/labeled data is formatted as an [Ushahidi Platform Post][platform post] and sent to a pre-configured Ushahidi Platform API instance.
+This tool receives inbound HTTP POST requests, transforms them into a Yodie/Crees/EMINA formatted request and retrieves an annotation/label for the given request data. The annotated/labeled data is formatted as an [Ushahidi Platform Post][platform post] and sent to a pre-configured Ushahidi Platform API instance.
 
 Authentication works using a shared secret which must be configured on both the [Ushahidi Platform][ushahidi platform] and the CSP instances. HTTP Requests and Responses are signed with this secret using SHA256.
 
