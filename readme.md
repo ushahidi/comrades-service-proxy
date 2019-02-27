@@ -6,6 +6,7 @@
 [ushahidi platform]: https://github.com/ushahidi/platform
 [yodie]: https://gate.ac.uk/applications/yodie.html
 [platform post]: http://github.ushahidi.org/platform/docs/api/index.html#posts
+![COMRADES Logo](Associated_Files/COMRADES_logo.png)
 
 Comrades Service Proxy
 ============
@@ -13,6 +14,8 @@ Comrades Service Proxy
 [Download][download]
 
 [Installation Guide][install]
+
+The [Configuration & Set-up Manual for the COMRADES Platform can be found here](https://s3-eu-west-1.amazonaws.com/comradesmanual/Comrades+Manual/COMRADES+Config+Setup+Manual.pdf). 
 
 ## What is CSP?
 
